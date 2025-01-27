@@ -35,13 +35,17 @@ import time
 #     print(f"o resultado era {resultado}")
 
 
-def sorteia_numero() -> dict:
+def sorteia_numero(operacao) -> dict:
     numeros = {}
     x_decimal = random.uniform(0, 150)
     x = int(x_decimal)
     numeros["x"] = x
-    y_decimal = random.uniform(0, 150)
-    y = int(y_decimal)
+    if operacao not in ("-", "+"):
+        y_decimal = random.uniform(0, 9)
+        y = int(y_decimal)
+    else:
+        y_decimal = random.uniform(0, 150)
+        y = int(y_decimal)
     numeros["y"] = y
     return numeros
 
@@ -63,10 +67,11 @@ def resultado(x, y, operacao) -> str:
         return x//y
 
 
-def verificacao(x, y, operacao, operacao_escolhida) -> bool:
+def verificacao(x, y, operacao) -> bool:
     result = resultado(x, y, operacao)
     print(f"Quanto o é {x} {operacao} {y}? ")
-    contador1(operacao_escolhida)
+    tempo = contador1(operacao)
+    contador2(tempo)
     palpite = valida_numero()
     if palpite == result:
         print("parabens,você acertou!")
@@ -86,17 +91,17 @@ def valida_numero() -> int:
             print("Digite uma resposta valida")
 
 
-def contador1(operacao_escolhida):
-    if operacao_escolhida == "+":
+def contador1(operacao):
+    if operacao == "+":
         tempo = 10
         return tempo
-    if operacao_escolhida == "-":
+    if operacao == "-":
         tempo = 15
         return tempo
-    if operacao_escolhida == ".":
+    if operacao == ".":
         tempo = 30
         return tempo
-    if operacao_escolhida == ":":
+    if operacao == ":":
         tempo = 30
         return tempo
 
@@ -110,11 +115,11 @@ def contador2(tempo):
 
 def principal():
 
-    numeros = sorteia_numero()
+    operacao = sorteia_operacao()
+    numeros = sorteia_numero(operacao)
     x = numeros["x"]
     y = numeros["y"]
-    operacao_escolhida = sorteia_operacao()
-    verificacao(x, y, operacao_escolhida,)
+    verificacao(x, y, operacao)
 
 
 def deseja_continuar():
