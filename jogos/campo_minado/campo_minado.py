@@ -1,29 +1,32 @@
 import random
 
 
-class Campo_minado():
+class Campo_minado:
+    def __init__(self):
+        dicionario = self.configuracoes()
+        self.linhas = dicionario['linha']
+        self.colunas = dicionario['coluna']
+        self.minas = dicionario['minas']
+
     "Classe interface"
 
     def jogo(self):
-        config = self.configuracoes()
-        localizacao_das_minas = self.prepara_lista_de_minas(config)
-
-        linhas = config["linhas"]
+        # config = self.configuracoes()
+        localizacao_das_minas = self.prepara_lista_de_minas()
 
         # print(localizacao_das_minas)
         explodiu = False
         lista_de_coordenadas = []
-        colunas = config["colunas"]
-        casas_a_percorrer = linhas*colunas-config["minas"]
+        casas_a_percorrer = self.linhas * self.colunas - self.minas
         while explodiu == False:
-            self.campo(linhas, colunas, lista_de_coordenadas,
+            self.campo(self.linhas, self.colunas, lista_de_coordenadas,
                        localizacao_das_minas)
 
             #  linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False)
-            coordenadas_do_usuario = self.coordenadas(config)
+            coordenadas_do_usuario = self.coordenadas()
             print(coordenadas_do_usuario)
             explodiu = self.verificacao_da_casa(
-                coordenadas_do_usuario, localizacao_das_minas, config)
+                coordenadas_do_usuario, localizacao_das_minas)
             if coordenadas_do_usuario not in lista_de_coordenadas:
                 lista_de_coordenadas.append(coordenadas_do_usuario)
             else:
@@ -136,5 +139,5 @@ class Campo_minado():
         return f"{bombas_proximas:2}"
 
 
-campo_minado = Campo_minado()
-campo_minado.jogo()
+# campo_minado = Campo_minado()
+# campo_minado.jogo()
