@@ -1,6 +1,9 @@
 import random
 
+
 class Campo_minado():
+    "Classe interface"
+
     def jogo(self):
         config = self.configuracoes()
         localizacao_das_minas = self.prepara_lista_de_minas(config)
@@ -13,9 +16,8 @@ class Campo_minado():
         colunas = config["colunas"]
         casas_a_percorrer = linhas*colunas-config["minas"]
         while explodiu == False:
-            self.campo(linhas,colunas, lista_de_coordenadas,localizacao_das_minas)
-
-
+            self.campo(linhas, colunas, lista_de_coordenadas,
+                       localizacao_das_minas)
 
             #  linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False)
             coordenadas_do_usuario = self.coordenadas(config)
@@ -30,7 +32,6 @@ class Campo_minado():
                 print("Parabéns, você venceu!")
                 break
         # self.campo(linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False)
-           
 
         "configurar campo"
         "configurar posição das minas"
@@ -39,61 +40,10 @@ class Campo_minado():
         "exibir quantas minas estão no perimetro do local clicado"
         "desenhar o campo"
 
-
     def configuracoes(self):
-        while True:
-            dificuldade = input("""seja bem vindo(a) ao campo minado! Agora me diga, qual o nivel de dificuldade que voce gostaria de jogar?
-                fácil
-                        
-                médio
-                        
-                dificil
-                        
-                complicado
-                        
-                entediado
+        raise Exception("Definir a dificuldade")
 
-                horas livres
-                            
-                            """).lower()
-
-            if dificuldade == "facil":
-                dicionario = {"linhas": 4, "colunas": 4, "minas": 2}
-                return dicionario
-
-            if dificuldade == "fácil":
-                dicionario = {"linhas": 4, "colunas": 4, "minas": 2}
-                return dicionario
-
-            if dificuldade == "médio":
-                dicionario = {"linhas": 6, "colunas": 6, "minas": 4}
-                return dicionario
-
-            if dificuldade == "medio":
-                dicionario = {"linhas": 6, "colunas": 6, "minas": 4}
-                return dicionario
-
-            if dificuldade == "difícil":
-                dicionario = {"linhas": 9, "colunas": 9, "minas": 8}
-                return dicionario
-
-            if dificuldade == "dificil":
-                dicionario = {"linhas": 9, "colunas": 9, "minas": 8}
-                return dicionario
-
-            if dificuldade == "complicado":
-                dicionario = {"linhas": 13, "colunas": 13, "minas": 15}
-                return dicionario
-
-            if dificuldade == "entediado":
-                dicionario = {"linhas": 16, "colunas": 16, "minas": 25}
-                return dicionario
-            if dificuldade == "horas livres":
-                dicionario = {"linhas": 20, "colunas": 20, "minas": 40}
-                return dicionario
-
-
-    def prepara_lista_de_minas(self,config):
+    def prepara_lista_de_minas(self, config):
         lista_de_minas = []
         qtdminas = config["minas"]
         while qtdminas:
@@ -107,7 +57,6 @@ class Campo_minado():
                 lista_de_minas .append(localizacao_da_mina)
                 qtdminas -= 1
         return lista_de_minas
-
 
     def campo(self, linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False):
         print('\n ', end='   ')
@@ -125,7 +74,8 @@ class Campo_minado():
                     numeros += 1
                     continue
                 if [linha, coluna] in lista_de_coordenadas and not fim_de_jogo:
-                    bombas_vizinhas =self.pega_vizinhos(x=linha, y=coluna, lista_minas=lista_de_minas)
+                    bombas_vizinhas = self.pega_vizinhos(
+                        x=linha, y=coluna, lista_minas=lista_de_minas)
                     print(bombas_vizinhas, end=" ")
                 elif [linha, coluna] in lista_de_minas and fim_de_jogo:
                     print(" X", end=" ")
@@ -133,8 +83,7 @@ class Campo_minado():
                     print(" .", end=" ")
             print("\n")
 
-
-    def coordenadas(self,config):
+    def coordenadas(self, config):
 
         while True:
             coordenadas_das_linhas = input("Qual linha você deseja ir?    ")
@@ -165,16 +114,14 @@ class Campo_minado():
             break
         return [coordenadas_das_linhas, coordenadas_das_colunas]
 
-
-    def verificacao_da_casa(self,coordenadas, localizacao_minas, config):
+    def verificacao_da_casa(self, coordenadas, localizacao_minas, config):
         if coordenadas in localizacao_minas:
             print("Booooooooooooooommmmm!!!!")
             return True
 
         return False
 
-
-    def pega_vizinhos(self,x, y, lista_minas) -> str:
+    def pega_vizinhos(self, x, y, lista_minas) -> str:
         bombas_proximas = 0
 
         direcoes = [(-1, 0), (1, 0), (0, -1), (0, 1),  # Cima, Baixo, Esquerda, Direita
@@ -188,5 +135,6 @@ class Campo_minado():
 
         return f"{bombas_proximas:2}"
 
-campo_minado=Campo_minado()
+
+campo_minado = Campo_minado()
 campo_minado.jogo()
