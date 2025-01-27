@@ -1,10 +1,16 @@
+from jogos.campo_minado.campo_minado_1facil import CampoMinadoFacil
+from jogos.campo_minado.campo_minado_2medio import CampoMinadoMedio
+from jogos.campo_minado.campo_minado_3dificil import CampoMinadoDificil
+from unidecode import unidecode
+
+
 class ConstrutorCampoMinado:
     def __init__(self):
         pass
 
     def escolhe_campo(self):
         while True:
-            dificuldade = input("""seja bem vindo(a) ao campo minado! Agora me diga, qual o nivel de dificuldade que voce gostaria de jogar?
+            dificuldade = unidecode(input("""seja bem vindo(a) ao campo minado! Agora me diga, qual o nivel de dificuldade que voce gostaria de jogar?
                 fácil
                         
                 médio
@@ -17,39 +23,24 @@ class ConstrutorCampoMinado:
 
                 horas livres
                             
-                            """).lower()
+                            """).lower())
 
             if dificuldade == "facil":
-                dicionario = {"linhas": 4, "colunas": 4, "minas": 2}
-                return dicionario
-
-            if dificuldade == "fácil":
-                dicionario = {"linhas": 4, "colunas": 4, "minas": 2}
-                return dicionario
-
-            if dificuldade == "médio":
-                dicionario = {"linhas": 6, "colunas": 6, "minas": 4}
-                return dicionario
+                return CampoMinadoFacil()
 
             if dificuldade == "medio":
-                dicionario = {"linhas": 6, "colunas": 6, "minas": 4}
-                return dicionario
-
-            if dificuldade == "difícil":
-                dicionario = {"linhas": 9, "colunas": 9, "minas": 8}
-                return dicionario
+                return CampoMinadoMedio()
 
             if dificuldade == "dificil":
-                dicionario = {"linhas": 9, "colunas": 9, "minas": 8}
-                return dicionario
+                return CampoMinadoDificil()
 
-            if dificuldade == "complicado":
-                dicionario = {"linhas": 13, "colunas": 13, "minas": 15}
-                return dicionario
+            # if dificuldade == "complicado":
+            #     dicionario = {"linhas": 13, "colunas": 13, "minas": 15}
+            #     return dicionario
 
-            if dificuldade == "entediado":
-                dicionario = {"linhas": 16, "colunas": 16, "minas": 25}
-                return dicionario
-            if dificuldade == "horas livres":
-                dicionario = {"linhas": 20, "colunas": 20, "minas": 40}
-                return dicionario
+            # if dificuldade == "entediado":
+            #     dicionario = {"linhas": 16, "colunas": 16, "minas": 25}
+            #     return dicionario
+            # if dificuldade == "horas livres":
+            #     dicionario = {"linhas": 20, "colunas": 20, "minas": 40}
+            #     return dicionario
