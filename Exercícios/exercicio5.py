@@ -12,6 +12,6 @@ tabuada = {}
 for x in ("COMPLETE AQUI"):
     tabuada['COMPLETE AQUI'] = x * fator
 
-print('COMPLETE CONFORME LINHA 4')
+print(f'Tabuada do {fator}')
 for fator2, resultado in tabuada.items():
     print(f'{fator} x {fator2} = {resultado}')

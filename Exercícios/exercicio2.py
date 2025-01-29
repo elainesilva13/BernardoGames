@@ -3,8 +3,8 @@
 
 num = int(input("Digite um número: "))
 
-while num < 10:
-    print("Número menor que 10. Digite novamente.")
+while num != 10:
+    print("Número diferente de 10. Digite novamente.")
     num = int(input("Digite um número: "))
     
 print("Você digitou o número correto!")

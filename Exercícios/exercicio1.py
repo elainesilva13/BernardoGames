@@ -2,7 +2,7 @@
 
 num = int(input("Digite um número: "))
 
-if num => 0:
+if num >= 0:
     print("Número positivo ou zero")
 else:
     print("Número negativo")
