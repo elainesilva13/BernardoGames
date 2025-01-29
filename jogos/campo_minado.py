@@ -1,5 +1,16 @@
 import random
-
+from campo_minado1facil import Campo_minado_facil
+from campo_minado2medio import Campo_minado_medio
+from campo_minado3dificil import Campo_minado_dificil
+from campo_minado4complicado import Campo_minado_complicado
+from campo_minado5entediado import Campo_minado_entediado
+from campo_minado6horas_livres import Campo_minado_horas_livres
+Facil=Campo_minado_facil
+Medio=Campo_minado_medio
+Dificil=Campo_minado_dificil
+Complicado=Campo_minado_complicado
+Entediado=Campo_minado_entediado
+Horas_livres=Campo_minado_horas_livres
 class Campo_minado():
     def jogo(self):
         config = self.configuracoes()
