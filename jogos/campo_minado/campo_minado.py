@@ -1,30 +1,31 @@
 import random
-from campo_minado1facil import Campo_minado_facil
-from campo_minado2medio import Campo_minado_medio
-from campo_minado3dificil import Campo_minado_dificil
-from campo_minado4complicado import Campo_minado_complicado
-from campo_minado5entediado import Campo_minado_entediado
-from campo_minado6horas_livres import Campo_minado_horas_livres
-Facil=Campo_minado_facil
-Medio=Campo_minado_medio
-Dificil=Campo_minado_dificil
-Complicado=Campo_minado_complicado
-Entediado=Campo_minado_entediado
-Horas_livres=Campo_minado_horas_livres
-class Campo_minado():
-    def jogo(self):
-        config = self.configuracoes()
-        localizacao_das_minas = self.prepara_lista_de_minas(config)
+from campo_minado_1facil import CampoMinadoFacil
+from campo_minado_2medio import CampoMinadoMedio
+from campo_minado_3dificil import CampoMinadoDificil
+from campo_minado_4complicado import CampoMinadoComplicado
+from campo_minado_5entediado import CampoMinadoEntediado
+from campo_minado_6horas_livres import CampoMinadoHorasLivres
+
+
+Facil=CampoMinadoFacil
+Medio=CampoMinadoMedio
+Dificil=CampoMinadoDificil
+Complicado=CampoMinadoComplicado
+Entediado=CampoMinadoEntediado
+Horas_livres=CampoMinadoHorasLivres
+
+
 
 
 class Campo_minado:
+    "Classe interface"
+
     def __init__(self):
         dicionario = self.configuracoes()
         self.linhas = dicionario['linha']
         self.colunas = dicionario['coluna']
         self.minas = dicionario['minas']
 
-    "Classe interface"
 
     def jogo(self):
         # config = self.configuracoes()

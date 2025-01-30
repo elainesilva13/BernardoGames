@@ -1,4 +1,4 @@
-from jogos.campo_minado.campo_minado import Campo_minado
+from campo_minado import Campo_minado
 
 
 class CampoMinadoMedio(Campo_minado):
