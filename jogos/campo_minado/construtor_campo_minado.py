@@ -4,7 +4,7 @@ from campo_minado_3dificil import CampoMinadoDificil
 from campo_minado_4complicado import CampoMinadoComplicado
 from campo_minado_5entediado import CampoMinadoEntediado
 from campo_minado_6horas_livres import CampoMinadoHorasLivres
-# from unidecode import unidecode
+from unidecode import unidecode
 
 
 class ConstrutorCampoMinado:
@@ -12,8 +12,9 @@ class ConstrutorCampoMinado:
         pass
 
     def escolhe_campo(self):
+        "Aqui serão exibidas as dificuldades e retornar-se-á um objeto do tipo Campo_minado de acordo com a escolha do usuário"
         while True:
-            dificuldade =(input("""seja bem vindo(a) ao campo minado! Agora me diga, qual o nivel de dificuldade que voce gostaria de jogar?
+            dificuldade = unidecode(input("""seja bem vindo(a) ao campo minado! Agora me diga, qual o nivel de dificuldade que voce gostaria de jogar?
                 fácil
                         
                 médio
@@ -38,12 +39,11 @@ class ConstrutorCampoMinado:
                 return CampoMinadoDificil()
 
             if dificuldade == "complicado":
-               
+
                 return CampoMinadoComplicado()
 
             if dificuldade == "entediado":
                 return CampoMinadoEntediado()
-
 
             if dificuldade == "horas livres":
                 return CampoMinadoHorasLivres()

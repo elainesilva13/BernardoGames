@@ -1,33 +1,39 @@
 import random
-from campo_minado_1facil import CampoMinadoFacil
-from campo_minado_2medio import CampoMinadoMedio
-from campo_minado_3dificil import CampoMinadoDificil
-from campo_minado_4complicado import CampoMinadoComplicado
-from campo_minado_5entediado import CampoMinadoEntediado
-from campo_minado_6horas_livres import CampoMinadoHorasLivres
+
+# erro import circular: quando um import retorna para o mesmo arquivo, causando um loop infinito
+# from campo_minado_1facil import CampoMinadoFacil
+# from campo_minado_2medio import CampoMinadoMedio
+# from campo_minado_3dificil import CampoMinadoDificil
+# from campo_minado_4complicado import CampoMinadoComplicado
+# from campo_minado_5entediado import CampoMinadoEntediado
+# from campo_minado_6horas_livres import CampoMinadoHorasLivres
+
+# ERRO: faltou o () para instanciar a classe!!!
+# Facil=CampoMinadoFacil
+# Medio=CampoMinadoMedio
+# Dificil=CampoMinadoDificil
+# Complicado=CampoMinadoComplicado
+# Entediado=CampoMinadoEntediado
+# Horas_livres=CampoMinadoHorasLivres
 
 
-Facil=CampoMinadoFacil
-Medio=CampoMinadoMedio
-Dificil=CampoMinadoDificil
-Complicado=CampoMinadoComplicado
-Entediado=CampoMinadoEntediado
-Horas_livres=CampoMinadoHorasLivres
+class Campo_minado:  # instanciando a classe = criando a classe e colocando na prateleirinha
+    "Esta classe serve como um molde para as outras classes campo minado, ou seja é a classe INTERFACE."
 
+    "configurar campo"
+    "configurar posição das minas"
+    "verificar se pisou em mina"
 
+    "exibir quantas minas estão no perimetro do local clicado"
+    "desenhar o campo"
 
-
-class Campo_minado:
-    "Classe interface"
-
-    def __init__(self):
-        dicionario = self.configuracoes()
-        self.linhas = dicionario['linha']
-        self.colunas = dicionario['coluna']
-        self.minas = dicionario['minas']
-
+    def __init__(self, linhas, colunas, minas):
+        self.linhas = linhas
+        self.colunas = colunas
+        self.minas = minas
 
     def jogo(self):
+        "Função principal responsável pela execução de toda a lógica do jogo"
         # config = self.configuracoes()
         localizacao_das_minas = self.prepara_lista_de_minas()
 
@@ -53,24 +59,17 @@ class Campo_minado:
                 break
         # self.campo(linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False)
 
-        "configurar campo"
-        "configurar posição das minas"
-        "verificar se pisou em mina"
+    # def configuracoes(self):
+    #     raise Exception("Definir a dificuldade")
 
-        "exibir quantas minas estão no perimetro do local clicado"
-        "desenhar o campo"
-
-    def configuracoes(self):
-        raise Exception("Definir a dificuldade")
-
-    def prepara_lista_de_minas(self, config):
+    def prepara_lista_de_minas(self):
         lista_de_minas = []
-        qtdminas = config["minas"]
+        qtdminas = self.minas
         while qtdminas:
 
-            linhas = config["linhas"]
+            linhas = self.linhas
             sorteia_linha = int(random.uniform(0, linhas))
-            colunas = config["colunas"]
+            colunas = self.colunas
             sorteia_coluna = int(random.uniform(0, colunas))
             localizacao_da_mina = [sorteia_linha, sorteia_coluna]
             if localizacao_da_mina not in lista_de_minas:
@@ -103,7 +102,7 @@ class Campo_minado:
                     print(" .", end=" ")
             print("\n")
 
-    def coordenadas(self, config):
+    def coordenadas(self):
 
         while True:
             coordenadas_das_linhas = input("Qual linha você deseja ir?    ")
@@ -113,9 +112,9 @@ class Campo_minado:
                 continue
             coordenadas_das_linhas = int(coordenadas_das_linhas)
 
-            if coordenadas_das_linhas >= config["linhas"]:
+            if coordenadas_das_linhas >= self.linhas:
                 print(f"""A sua coordenada não é válida. Digite de 0 á {
-                    config["linhas"]-1}.""")
+                    self.linhas-1}.""")
                 continue
             break
 
@@ -126,15 +125,15 @@ class Campo_minado:
                 print("A sua coordenada não é válida. Digite novamente.")
                 continue
             coordenadas_das_colunas = int(coordenadas_das_colunas)
-            if coordenadas_das_colunas >= config["colunas"]:
+            if coordenadas_das_colunas >= self.colunas:
                 print(f"""A sua coordenada não é válida. Digite de 0 á {
-                    config["colunas"]-1}.""")
+                    self.colunas-1}.""")
                 continue
 
             break
         return [coordenadas_das_linhas, coordenadas_das_colunas]
 
-    def verificacao_da_casa(self, coordenadas, localizacao_minas, config):
+    def verificacao_da_casa(self, coordenadas, localizacao_minas):
         if coordenadas in localizacao_minas:
             print("Booooooooooooooommmmm!!!!")
             return True
