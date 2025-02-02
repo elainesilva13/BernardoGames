@@ -31,6 +31,7 @@ class Campo_minado:  # instanciando a classe = criando a classe e colocando na p
         self.linhas = linhas
         self.colunas = colunas
         self.minas = minas
+        self.lista_de_coordenadas = []
 
     def jogo(self):
         "Função principal responsável pela execução de toda a lógica do jogo"
@@ -40,7 +41,6 @@ class Campo_minado:  # instanciando a classe = criando a classe e colocando na p
         # print(localizacao_das_minas)
         explodiu = False
         lista_de_coordenadas = []
-        casas_a_percorrer = self.linhas * self.colunas - self.minas
         while explodiu == False:
             self.campo(self.linhas, self.colunas, lista_de_coordenadas,
                        localizacao_das_minas)
@@ -54,13 +54,18 @@ class Campo_minado:  # instanciando a classe = criando a classe e colocando na p
                 lista_de_coordenadas.append(coordenadas_do_usuario)
             else:
                 print("Coordenada já foi digitada. Tente outra!")
-            if len(lista_de_coordenadas) == casas_a_percorrer:
+                continue
+            if self.verifica_se_venceu(lista_de_coordenadas):
                 print("Parabéns, você venceu!")
                 break
         # self.campo(linhas, colunas, lista_de_coordenadas: list[list], lista_de_minas, fim_de_jogo=False)
 
     # def configuracoes(self):
     #     raise Exception("Definir a dificuldade")
+
+    def verifica_se_venceu(self, lista_de_coordenadas):
+        casas_a_percorrer = self.linhas * self.colunas - self.minas
+        return len(lista_de_coordenadas) == casas_a_percorrer
 
     def prepara_lista_de_minas(self):
         lista_de_minas = []
@@ -136,7 +141,7 @@ class Campo_minado:  # instanciando a classe = criando a classe e colocando na p
     def verificacao_da_casa(self, coordenadas, localizacao_minas):
         if coordenadas in localizacao_minas:
             print("Booooooooooooooommmmm!!!!")
-            return True
+            return 'X('
 
         return False
 

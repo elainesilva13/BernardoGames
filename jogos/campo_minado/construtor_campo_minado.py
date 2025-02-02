@@ -9,7 +9,14 @@ from unidecode import unidecode
 
 class ConstrutorCampoMinado:
     def __init__(self):
-        pass
+        self.dificuldades = {
+            'Fácil': CampoMinadoFacil,
+            'Médio': CampoMinadoMedio,
+            'Difícil': CampoMinadoDificil,
+            'Complicado': CampoMinadoComplicado,
+            'Entediado': CampoMinadoEntediado,
+            'Horas Livres': CampoMinadoHorasLivres,
+        }
 
     def escolhe_campo(self):
         "Aqui serão exibidas as dificuldades e retornar-se-á um objeto do tipo Campo_minado de acordo com a escolha do usuário"
