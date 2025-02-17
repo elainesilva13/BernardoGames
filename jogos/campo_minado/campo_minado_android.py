@@ -46,7 +46,7 @@ class TelaInicial(Screen):
         self.manager.get_screen("campo_minado").iniciar_jogo(campo)
 
 
-class CampoMinadoGrafico(Screen):
+class TelaDeJogo(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.layout = BoxLayout(orientation='horizontal')
@@ -130,6 +130,9 @@ class CampoMinadoGrafico(Screen):
         if botao_mina.background_normal != '':
             return
 
+        if botao_mina.text != '':
+            return
+
         coordenadas = self.botoes[botao_mina]
 
         if self.jogo.verificacao_da_casa(coordenadas, self.minas):
@@ -186,7 +189,7 @@ class CampoMinadoApp(App):
         sm = ScreenManager()
 
         sm.add_widget(TelaInicial(name="tela_inicial"))
-        sm.add_widget(CampoMinadoGrafico(name="campo_minado"))
+        sm.add_widget(TelaDeJogo(name="campo_minado"))
 
         return sm
 
