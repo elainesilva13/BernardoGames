@@ -3,7 +3,7 @@ name: Build APK for Kivy
 on:
   push:
     branches:
-      - main  # Ou o nome da sua branch principal
+      - campo_minado_prof_pronto
 
 jobs:
   build:
