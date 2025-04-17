@@ -1,6 +1,6 @@
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
-geolocator=Nominatim(user_agent="estenomcchecdcbdhfwjdwhgywtwwtde6353637r858yuo70uoyolmkswu1234567890-")
+
 
 
 def calcula_distancia(origem:tuple, destino:tuple):
@@ -8,9 +8,10 @@ def calcula_distancia(origem:tuple, destino:tuple):
     return(distancia)
  
 def detalhes_lugar(lugar):
+    geolocator=Nominatim(user_agent=lugar)
     location = geolocator.geocode(lugar)
     if location:
-        return location.raw.get("address", {})
+        return location.raw
     return None
 
 
@@ -45,7 +46,7 @@ def pergunta_e_verifica_endereco(mensagem_input):
     # pegar as coordenadas de cada endereço
     # calcular a distancia entre as coordenadas 
 
-if __name__=="__main__":
+def teste_de_calculo_de_frete():
     while True:
         coordenada_de_origem=pergunta_e_verifica_endereco(mensagem_input="Escreva o endereço de origem:    ")
         coordenada_de_destino=pergunta_e_verifica_endereco(mensagem_input="Agora, diga o seu destino:     ")       
@@ -62,5 +63,48 @@ if __name__=="__main__":
         print("Um de seus endereços é inválido. Tente novamente.")
         continue    
 
+paises_capitais_america = {
+'ggddfgfhfhfhkfkhfekhfhergerffehvfhfhrfejgfgfhfhfherfg': 'Saint John\'s',
+'Argentina': 'Buenos Aires',
+'Bahamas': 'Nassau',
+'Barbados': 'Bridgetown',
+'Belize': 'Belmopan',
+'Bolívia': 'Sucre',
+'Brasil': 'Brasília',
+'Chile': 'Santiago',
+'Colômbia': 'Bogotá',
+'Costa Rica': 'San José',
+'Cuba': 'Havana',
+'Dominica': 'Roseau',
+'Equador': 'Quito',
+'El Salvador': 'San Salvador',
+'Granada': 'Saint George\'s',
+'Gcdcffffff': 'Cidade da Guatemala',
+'Guyana': 'Georgetown',
+'Haiti': 'Porto Príncipe',
+'Honduras': 'Tegucigalpa',
+'Jamaica': 'Kingston',
+'Mdddfefefr': 'Cidade do México',
+'Nicarágua': 'Manágua',
+'Panamá': 'Cidade do Panamá',
+'Paraguai': 'Assunção',
+'Peru': 'Lima',
+'República Dominicana': 'Santo Domingo',
+'São Cristóvão e Nevis': 'Basseterre',
+'São Vicente e Granadinas': 'Kingstown',
+'Suriname': 'Paramaribo',
+'Trinidad e Tobago': 'Porto de Espanha',
+'Uruguai': 'Montevidéu',
+'Venezuela': 'Caracas'
+}
 
-
+if __name__=="__main__":
+    for pais in paises_capitais_america.keys():
+        geolocator=Nominatim(user_agent=pais)
+        informacoes_retornadas=detalhes_lugar(lugar=pais)
+        # tipo_de_endereco=informacoes_retornadas["addresstype"]
+        if informacoes_retornadas==None:
+            print(f"O local {pais} é invalido")
+            continue
+        tipo_de_endereco=informacoes_retornadas.get("addresstype","Addresstype não encontrado")
+        print(f"{pais}: {tipo_de_endereco}")
