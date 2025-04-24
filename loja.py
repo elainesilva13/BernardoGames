@@ -1,4 +1,5 @@
 import time
+import pandas as pd
 # perguntar o que o usuario quer fazer
 # verificar se é valido
 # realizar a ação pedida
@@ -13,7 +14,8 @@ class Loja():
         self.dinheiro=8000
         self.produtos_e_precos={"celular":980, "computador":1450, "ps5":3800, "caixa de som":170, "controle de tv universal":135, "controle de ps5": 370, "televisão":2400, "impressora":1900, "balinha": 3}
         self.produtos_e_quantidades={"celular":4, "computador":3, "ps5":2, "caixa de som":8, "controle de tv universal": 23, "controle de ps5": 6, "televisão":4, "impressora": 7, "balinha": 117}
-    
+        self.tabela_produtos = pd.read_csv(r'estoque.csv', sep=';')
+        print(self.tabela_produtos)
     
     def bem_vindo(self): #remover redundâncias
         print("\nBem vindo a nossa loja! O que você gostaria de fazer?\n")
@@ -32,8 +34,10 @@ class Loja():
 
     def comprar_ou_olhar(self):
         print("\nEstes são os nossos produtos!\n")
-        for produto in self.produtos_e_precos:
-            print(f"\n{produto}")
+        #for produto in self.produtos_e_precos:
+        #    print(f"\n{produto}")
+        for indice, linha in self.tabela_produtos.iterrows():
+            print(f'{linha['produto']} - R$ {linha['valor']}')
         while True:    
             print("\nAgora, o que você quer fazer?")
             print("\nA)Quero comprar um produto")
@@ -94,8 +98,11 @@ class Loja():
 
 
     def verifica_se_produto_existe(self, compra): #melhoria nome da função
-        if compra in self.produtos_e_quantidades:
+        #if compra in self.produtos_e_quantidades:
+        #    return True
+        if compra in self.tabela_produtos['produto'].to_list():
             return True
+        return False
 
     def verifica_estoque(self, compra):
         estoque_do_item=self.produtos_e_quantidades[compra]
