@@ -15,7 +15,7 @@ class Loja():
         self.produtos_e_quantidades={"celular":4, "computador":3, "ps5":2, "caixa de som":8, "controle de tv universal": 23, "controle de ps5": 6, "televisão":4, "impressora": 7, "balinha": 117}
     
     
-    def bem_vindo(self):
+    def bem_vindo(self): #remover redundâncias
         print("\nBem vindo a nossa loja! O que você gostaria de fazer?\n")
         while True:
             print("\nA)Comprar algum produto\n")
@@ -58,16 +58,18 @@ class Loja():
             time.sleep(2)
     
     def comprar_um_produto(self):
+        # while com no máximo 8 linhas (lembre-se do return)
+        # nenhum else (lembre-se do return) Dica: use "False"/"None" ao invés de True
         while True:
             print("\nQual produto você gostaria de comprar?")
             compra=input("           ").lower()
-            verificacao=self.verifica_compra(compra)
-            if verificacao== True:
+            produto_existe=self.verifica_se_produto_existe(compra) #melhoria nome da variável
+            if produto_existe== True:
                 verificacao_do_estoque=self.verifica_estoque(compra)
             else:
                 print("\nO seu produto não existe. Tente novamente.")
                 time.sleep(2)
-                break
+                break #sugestão: use return
             if verificacao_do_estoque== True:
                 verificacao_do_dinheiro=self.verifica_dinheiro(compra)
                 # print(verificacao_do_dinheiro)
@@ -91,7 +93,7 @@ class Loja():
                 break
 
 
-    def verifica_compra(self, compra):
+    def verifica_se_produto_existe(self, compra): #melhoria nome da função
         if compra in self.produtos_e_quantidades:
             return True
 
@@ -110,7 +112,7 @@ class Loja():
         return True
 
     def principal(self):
-        comprar_ou_sair=self.bem_vindo()
+        comprar_ou_sair=self.bem_vindo() # rever esta função (é mesmo necessária?)
         while True:
             decisao1=self.comprar_ou_olhar()
             print(decisao1)
