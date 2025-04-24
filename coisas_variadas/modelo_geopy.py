@@ -99,12 +99,13 @@ paises_capitais_america = {
 }
 
 if __name__=="__main__":
-    for pais in paises_capitais_america.keys():
-        geolocator=Nominatim(user_agent=pais)
-        informacoes_retornadas=detalhes_lugar(lugar=pais)
-        # tipo_de_endereco=informacoes_retornadas["addresstype"]
-        if informacoes_retornadas==None:
-            print(f"O local {pais} é invalido")
-            continue
-        tipo_de_endereco=informacoes_retornadas.get("addresstype","Addresstype não encontrado")
-        print(f"{pais}: {tipo_de_endereco}")
+    # for pais in paises_capitais_america.keys():
+    geolocator=Nominatim(user_agent="pais")
+    #     informacoes_retornadas=detalhes_lugar(lugar=pais)
+    #     # tipo_de_endereco=informacoes_retornadas["addresstype"]
+    #     if informacoes_retornadas==None:
+    #         print(f"O local {pais} é invalido")
+    #         continue
+    #     tipo_de_endereco=informacoes_retornadas.get("addresstype","Addresstype não encontrado")
+    #     print(f"{pais}: {tipo_de_endereco}")
+    print(detalhes_lugar("alemanha"))
