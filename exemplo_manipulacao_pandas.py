@@ -1,8 +1,9 @@
 import pandas as pd
-
+import warnings
+warnings.filterwarnings("ignore")  #ignorar alertas
 
 def main():
-    compras = 1
+    compras = 5
     tabela_produtos=pd.read_csv(r"estoque_atualizado.csv", sep=";")
 
     while compras:
