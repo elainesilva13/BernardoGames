@@ -33,8 +33,10 @@ class Loja():
 
     def comprar_ou_olhar(self):
         print("\nEstes são os nossos produtos!\n")
-        print(self.tabela_produtos)
-
+        #for produto in self.produtos_e_precos:
+        #    print(f"\n{produto}")
+        for indice, linha in self.tabela_produtos.iterrows():
+            print(f'{linha['produto']} - R$ {linha['valor']}')
         while True:    
             print("\nAgora, o que você quer fazer?")
             print("\nA)Quero comprar um produto")
@@ -88,9 +90,12 @@ class Loja():
                 break
 
 
-    def verifica_se_produto_existe(self, compra):
-        if compra in self.produtos_e_quantidades:
+    def verifica_se_produto_existe(self, compra): #melhoria nome da função
+        #if compra in self.produtos_e_quantidades:
+        #    return True
+        if compra in self.tabela_produtos['produto'].to_list():
             return True
+        return False
 
     def verifica_estoque(self, compra):
         estoque_do_item=self.produtos_e_quantidades[compra]
