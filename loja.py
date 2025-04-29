@@ -35,8 +35,10 @@ class Loja():
         print("\nEstes são os nossos produtos!\n")
         #for produto in self.produtos_e_precos:
         #    print(f"\n{produto}")
-        for indice, linha in self.tabela_produtos.iterrows():
-            print(f'{linha['produto']} - R$ {linha['valor']}')
+        # for indice, linha in self.tabela_produtos.iterrows():
+            # print(f'{linha['produto']} - R$ {linha['valor']}')
+
+        print(self.tabela_produtos)
         while True:    
             print("\nAgora, o que você quer fazer?")
             print("\nA)Quero comprar um produto")
@@ -90,6 +92,77 @@ class Loja():
                 break
 
 
+    def comprar_um_produto_sem_while(self):
+        # Técnica "primeiro que sai": quando cai na primeira condição verdadeira, retorna, sem necessidade de continuar percorrendo o código
+        # Use essa técnica para eliminar "else"
+        compra=input("\nQual produto você gostaria de comprar?").lower()
+        if not self.verifica_se_produto_existe(compra):
+            print("\nO seu produto não existe. Tente novamente.")
+            return
+        if not self.verifica_estoque(compra):
+            print("\nO produto escolhido está fora de estoque no momento! Escolha outro produto.")
+            return 
+        if not self.verifica_dinheiro(compra):
+            print("\nVocê não possui dinheiro suficiente par realizar essa compra. Tente comprar outro produto!")
+            return    
+        
+        self.dinheiro-=self.produtos_e_precos[compra]
+        self.produtos_e_quantidades[compra]-=1
+        print("Compra efetuada com sucesso!")
+        print(f"\nO seu dinheiro é: {self.dinheiro}")
+
+    def comprar_um_produto_while_reduzido(self):
+        while True:
+            compra=input("\nQual produto você gostaria de comprar?").lower()
+            if not self.verifica_se_produto_existe(compra):
+                print("\nO seu produto não existe. Tente novamente.")
+                continue
+            if not self.verifica_estoque(compra):
+                print("\nO produto escolhido está fora de estoque no momento! Escolha outro produto.")
+                continue
+            if not self.verifica_dinheiro(compra):
+                print("\nVocê não possui dinheiro suficiente par realizar essa compra. Tente comprar outro produto!")
+                continue
+            break
+
+        self.dinheiro-=self.produtos_e_precos[compra]
+        self.produtos_e_quantidades[compra]-=1
+        print("Compra efetuada com sucesso!")
+        print(f"\nO seu dinheiro é: {self.dinheiro}")
+        
+
+        
+
+        while True:
+            compra=input("\nQual produto você gostaria de comprar?").lower()
+            produto_existe=self.verifica_se_produto_existe(compra) 
+
+            if produto_existe== True:
+                verificacao_do_estoque=self.verifica_estoque(compra)
+            else:
+                print("\nO seu produto não existe. Tente novamente.")
+                time.sleep(2)
+                break #sugestão: use return
+            if verificacao_do_estoque== True:
+                verificacao_do_dinheiro=self.verifica_dinheiro(compra)
+            else:
+                print("\nO produto escolhido está fora de estoque no momento! Escolha outro produto.")
+                time.sleep(2)
+                break    
+            if verificacao_do_dinheiro==True:
+                self.dinheiro-=self.produtos_e_precos[compra]
+                self.produtos_e_quantidades[compra]-=1
+                print("Compra efetuada com sucesso!")
+                print(f"\nO seu dinheiro é: {self.dinheiro}")
+                time.sleep(2)
+                break
+            else:
+                print("\nVocê não possui dinheiro suficiente par realizar essa compra. Tente comprar outro produto!")
+                time.sleep(2)
+                break
+
+
+
     def verifica_se_produto_existe(self, compra): #melhoria nome da função
         #if compra in self.produtos_e_quantidades:
         #    return True
@@ -114,6 +187,7 @@ class Loja():
             decisao=self.comprar_ou_olhar()
             if decisao== "comprar":
                 self.comprar_um_produto()    
+                time.sleep(2)
             if decisao== "sair":
                 break
 
