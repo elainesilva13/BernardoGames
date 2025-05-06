@@ -102,3 +102,7 @@ class Loja2():
 
 iniciador=Loja2()
 comecar=iniciador.principal() 
+
+# corrigir os bugs
+# corrigir o loop infinito
+# opção de mais de um clientes
