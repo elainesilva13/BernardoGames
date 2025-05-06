@@ -21,7 +21,7 @@ class Loja2():
             lista_de_alternativas=["A","B"]
             print("\nUm cliente entrou na sua loja. O que você quer fazer??")
             print("\nA)Mostrar os produtos")
-            print("\nB)Fechar a loja")
+            print("\nB)Adicionar um produto")
             escolha=input("       ").upper()
             if escolha not in lista_de_alternativas:
                 continue
@@ -52,8 +52,13 @@ class Loja2():
 
         
         
-        
-        
+    def adicionar_um_produto(self):
+        produto_adicionado=input("Qual produto você quer adicionar?    ")
+        preco_do_produto=input("E agora, qual é o preço dele?")
+        # self.produtos_e_precos[produto_adicionado]=preco_do_produto
+        # print(self.produtos_e_precos)
+        self.tabela_produtos['produto'][produto_adicionado]=preco_do_produto
+        print(self.tabela_produtos)
 
     def principal(self):
         comeco=self.cliente_entra()
@@ -61,7 +66,7 @@ class Loja2():
             if comeco =="A":
                 mostrar_produtos=self.escolha_do_cliente()
             if comeco=="B":
-                break    
+                produto_adicionado=self.adicionar_um_produto()
             if mostrar_produtos==False:
                 break
 

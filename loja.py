@@ -1,5 +1,7 @@
 import time
 import pandas as pd
+import warnings
+warnings.filterwarnings("ignore")
 # perguntar o que o usuario quer fazer
 # verificar se é valido
 # realizar a ação pedida
@@ -65,9 +67,11 @@ class Loja():
         # while com no máximo 8 linhas (lembre-se do return)
         # nenhum else (lembre-se do return) Dica: use "False"/"None" ao invés de True
         while True:
-            compra=input("\nQual produto você gostaria de comprar?").lower()
-            produto_existe=self.verifica_se_produto_existe(compra) 
-            if produto_existe== True:
+            # compra=input("\nQual produto você gostaria de comprar?").lower()
+            compra= int(input("Qual produto você quer?(digite o numero da posição na tabela)  "))  
+            # produto_existe=self.verifica_se_produto_existe(compra) 
+            # if produto_existe== True:
+            if self.tabela_produtos['produto'].iloc[compra]:  
                 verificacao_do_estoque=self.verifica_estoque(compra)
             else:
                 print("\nO seu produto não existe. Tente novamente.")
@@ -80,8 +84,8 @@ class Loja():
                 time.sleep(2)
                 break    
             if verificacao_do_dinheiro==True:
-                self.dinheiro-=self.produtos_e_precos[compra]
-                self.produtos_e_quantidades[compra]-=1
+                self.dinheiro-=self.tabela_produtos['valor'].iloc[compra]
+                self.tabela_produtos['estoque'].iloc[compra]-=1
                 print("Compra efetuada com sucesso!")
                 print(f"\nO seu dinheiro é: {self.dinheiro}")
                 time.sleep(2)
@@ -170,14 +174,16 @@ class Loja():
             return True
         return False
 
+
     def verifica_estoque(self, compra):
-        estoque_do_item=self.produtos_e_quantidades[compra]
+        # estoque_do_item=self.produtos_e_quantidades[compra]
+        estoque_do_item=self.tabela_produtos['estoque'].iloc[compra]
         if estoque_do_item==0:
             return False
         return True
 
     def verifica_dinheiro(self,compra):
-        preco_do_produto=self.produtos_e_precos[compra]
+        preco_do_produto=self.tabela_produtos['valor'].iloc[compra]
         if self.dinheiro < preco_do_produto:
             return False
         return True
@@ -189,6 +195,7 @@ class Loja():
                 self.comprar_um_produto()    
                 time.sleep(2)
             if decisao== "sair":
+                print(f"Obrigado por comprar na nossa loja! ")
                 break
 
 
