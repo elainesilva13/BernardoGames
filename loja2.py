@@ -73,12 +73,14 @@ class Loja2():
 
         df_1_linha = pd.DataFrame(data={
             'produto': [produto_adicionado],
-            'valor' : [preco_do_produto],
-            'estoque': [estoque_do_produto]
+            'valor' : [float(preco_do_produto)],
+            'estoque': [int(estoque_do_produto)]
         })
 
         self.tabela_produtos = pd.concat([self.tabela_produtos, df_1_linha], ignore_index=True)
         self.tabela_produtos.to_csv(r"estoque originaly.csv", sep=';', index=False)
+        pd.read_csv(r"estoque originaly.csv", sep=";")
+        
         # self.produtos_e_precos[produto_adicionado]=preco_do_produto
         # print(self.produtos_e_precos)
         #self.tabela_produtos['produto'][produto_adicionado]=preco_do_produto
