@@ -29,33 +29,33 @@ class Loja2():
         
     def escolha_do_cliente(self):
         
-        print("\nVocê mostrou a tabela de produtos para o cliente")
-        print(self.tabela_produtos)
-        print("\nO cliente está escolhendo um produto agora...")
-        time.sleep(2)
-        if self.numero_de_compras_maximo==0:
-            print("\nO cliente saiu!")
-            print(f"\nO cliente comprou esse(s) produto(s):{self.lista_de_compras}") #por que continua oferecendo se p cçiente já foi embora?
-        
-        produtos = self.tabela_produtos['produtos'].to_list()
-        produtos.append('sair')
-        #escolha_do_cliente=random.choice(list(self.produtos_e_precos.items()))
-        escolha_do_cliente:str=random.choice(produtos)
-        if escolha_do_cliente=="sair":
-            print("\nO cliente saiu!")
-            if self.lista_de_compras==None:
-                print("\nO cliente não comprou nenhum produto!")
-                return False    
-            print(f"\nO cliente comprou esse(s) produto(s): {self.lista_de_compras}")
-            return False
-        preco_produto = self.tabela_produtos.loc[self.tabela_produtos['produto']== escolha_do_cliente, 'preco'].values[0]
-        # filtra/busca valores= tabela.loc[repete a variavel tabela[coluna que vai olhar] == condição/o que você procura, coluna que você quer].vales[0] - [0] é para retornar o primeiro que achar, se quiser todos na forma de tupla, só tirar o [0]
-        print(f"\nO cliente comprou um(a) {escolha_do_cliente}")
-        self.lista_de_compras.append(escolha_do_cliente)
-        self.dinheiro+=preco_produto
-        print(f"\nO seu dinheiro é: {self.dinheiro}")
-        self.numero_de_compras_maximo-=1
-        return True # se estiver trabalhando com "False", use o "True" também! (booleanos)
+        while self.numero_de_compras_maximo:
+            print("\nVocê mostrou a tabela de produtos para o cliente")
+            print(self.tabela_produtos)
+            print("\nO cliente está escolhendo um produto agora...")
+            time.sleep(2)
+            
+            produtos = self.tabela_produtos['produto'].to_list()
+            produtos.append('sair')
+            #escolha_do_cliente=random.choice(list(self.produtos_e_precos.items()))
+            escolha_do_cliente:str=random.choice(produtos)
+            if escolha_do_cliente=="sair":
+                print("\nO cliente saiu!")
+                if self.lista_de_compras==None:
+                    print("\nO cliente não comprou nenhum produto!")
+                    return False    
+                print(f"\nO cliente comprou esse(s) produto(s): {self.lista_de_compras}")
+                return False
+            preco_produto = self.tabela_produtos.loc[self.tabela_produtos['produto']== escolha_do_cliente, 'valor'].values[0]
+            # filtra/busca valores= tabela.loc[repete a variavel tabela[coluna que vai olhar] == condição/o que você procura, coluna que você quer].vales[0] - [0] é para retornar o primeiro que achar, se quiser todos na forma de tupla, só tirar o [0]
+            print(f"\nO cliente comprou um(a) {escolha_do_cliente}")
+            self.lista_de_compras.append(escolha_do_cliente)
+            self.dinheiro+=preco_produto
+            print(f"\nO seu dinheiro é: {self.dinheiro}")
+            self.numero_de_compras_maximo-=1
+        print("\nO cliente saiu!")
+        print(f"\nO cliente comprou esse(s) produto(s):{self.lista_de_compras}")    
+        return True 
         
         
     def adicionar_um_produto_bernardo(self):
@@ -80,22 +80,22 @@ class Loja2():
         self.tabela_produtos = pd.concat([self.tabela_produtos, df_1_linha], ignore_index=True)
         self.tabela_produtos.to_csv(r"estoque originaly.csv", sep=';', index=False)
         # self.produtos_e_precos[produto_adicionado]=preco_do_produto
-        print(self.produtos_e_precos)
+        # print(self.produtos_e_precos)
         #self.tabela_produtos['produto'][produto_adicionado]=preco_do_produto
         print(self.tabela_produtos)
 
 
     def principal(self):
-        comeco=self.cliente_entra()
         while True:
+            comeco=self.cliente_entra()
             if comeco =="A":
                 mostrar_produtos=self.escolha_do_cliente()
-            if comeco=="B":
-                produto_adicionado=self.adicionar_um_produto() #Por que uma variável está recebendo o retorno da função sendo que esta não retorna nada
+                self.numero_de_compras_maximo=5
                 continue
-            #EVITAR:
-            #if mostrar_produtos==False:
-            #    break
+            if comeco=="B":
+                self.adicionar_um_produto() 
+                continue
+          
 
             if not mostrar_produtos: # = 0, = None o = False
                 break
@@ -105,4 +105,3 @@ comecar=iniciador.principal()
 
 # corrigir os bugs
 # corrigir o loop infinito
-# opção de mais de um clientes
