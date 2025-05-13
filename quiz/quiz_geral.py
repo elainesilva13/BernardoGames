@@ -20,7 +20,25 @@ class QuizGeral():
         self.pontuacao:int
         self.placar:pd.DataFrame
 
-    def pergunta_jogo(self):
+    def pergunta_jogo_com_dicionario(self):
+        temas = {
+            'A': 'História',
+            'B': 'Geografia',
+            'C': 'Ciências',
+            'D':'Português',
+            'E': 'Pegadinhas'
+        }
+
+        while True:
+            print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
+            for chave, valor in temas.items():
+                print(f'{chave}) {valor}')
+            tema_do_jogo=input("      ").upper()
+            if tema_do_jogo.upper() not in temas.keys():
+                continue
+            return temas[tema_do_jogo].lower()
+
+    def pergunta_jogo(self): 
         lista_de_alternativas=["A","B","C","D","D","E"]
         while True:
             print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
@@ -46,21 +64,26 @@ class QuizGeral():
                     
 
     def carrega_perguntas_e_respostas(self, tema):
-        tabela_perguntas_e_respostas=pd.read_csv(r"C:\Users\berna\AppData\Local\Microsoft\Windows\INetCache\IE\9XVNXZEJ\quiz[1].csv", sep=";")    
+        tabela_perguntas_e_respostas=pd.read_csv(r"quiz.csv", sep=";")    
         self.perguntas_e_respostas=tabela_perguntas_e_respostas[tabela_perguntas_e_respostas["tema"]== tema]
+        self.perguntas_e_respostas = self.perguntas_e_respostas.reset_index()
         print(self.perguntas_e_respostas)
 
+    def sorteia_pergunta_outra_forma(self):
+        lista_indices = list(self.perguntas_e_respostas.index)
+        indice_pergunta = random.choice(lista_indices)
+        print(self.perguntas_e_respostas.iloc[indice_pergunta])
 
-
-    def sorteia_pergunta(self):
-    # qtd=len(self.perguntas_e_respostas)    
+    def sorteia_pergunta(self): #quebrar em 3 funções
+        qtd=len(self.perguntas_e_respostas)    
+        indice_pergunta = random.randint(0, qtd) #randint = sorteia número inteiro
         # numero_de_questoes=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-        pergunta=(self.perguntas_e_respostas['pergunta'].iloc[0])
+        pergunta=(self.perguntas_e_respostas['pergunta'].iloc[indice_pergunta])
         
         print(pergunta)
-        print(f"A){self.perguntas_e_respostas['resposta_certa'].iloc[0]}")
-        print(f"B){self.perguntas_e_respostas['resposta_errada1'].iloc[0]}")
-        print(f"C){self.perguntas_e_respostas['resposta_errada2'].iloc[0]}")
+        print(f"A){self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]}")
+        print(f"B){self.perguntas_e_respostas['resposta_errada1'].iloc[indice_pergunta]}")
+        print(f"C){self.perguntas_e_respostas['resposta_errada2'].iloc[indice_pergunta]}")
         resposta_para_teste=input("           ").lower()
         if resposta_para_teste== "a":
             print("Você acertou!")
@@ -69,7 +92,7 @@ class QuizGeral():
 
 
     def principal(self):
-        tema=self.pergunta_jogo()
+        tema=self.pergunta_jogo_com_dicionario()
         self.carrega_perguntas_e_respostas(tema)
         pergunta_sorteada=self.sorteia_pergunta()
 
