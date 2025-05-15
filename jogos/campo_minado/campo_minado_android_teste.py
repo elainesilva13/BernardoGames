@@ -197,5 +197,5 @@ class CampoMinadoApp(App):
 if __name__ == '__main__':
     CampoMinadoApp().run()
  
-tem menu de contexto
+
 
