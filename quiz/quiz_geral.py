@@ -40,34 +40,80 @@ class QuizGeral():
             return temas[tema_do_jogo].lower()
 
     def pergunta_jogo(self): 
-        lista_de_alternativas=["A","B","C","D","D","E"]
         lista_de_modos=list(self.tabela_perguntas_e_respostas["tema"].unique())
         while True:
             print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
-            for numero, materia  in enumerate(lista_de_alternativas):
-                print(f"{numero+1}){materia}")
+            for numero, materia  in enumerate(lista_de_modos):
+                print(f"{numero+1}){materia.title()}")
             tema_do_jogo=input("      ").upper()
+            try:
+                tema_do_jogo_int = int(tema_do_jogo) - 1
+            except:
+                print('Você não digitou uma opção válida')
+                continue
+            if tema_do_jogo_int >= len(lista_de_modos) or tema_do_jogo_int < 0:
+                print('A opção que você digitou não existe')
+                continue
+            tema_materia = lista_de_modos[tema_do_jogo_int]
+            return tema_materia
 
-            # print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
-            # print("A)História")
-            # print("B)Geografia")
-            # print("C)Ciências")
-            # print("D)Português")
-            # print("E)Pegadinhas")
-            # if tema_do_jogo not in lista_de_alternativas:
-            #     continue
-            # match tema_do_jogo:
-            #     case "A":
-            #         return "história"
-            #     case "B":
-            #         return "geografia"
-            #     case "C":
-            #         return "ciências"
-            #     case "D":
-            #         return "português"
-            #     case "E":
-            #         return "pegadinhas"
-                    
+    def pergunta_jogo_outra_forma(self): 
+        lista_de_modos=list(self.tabela_perguntas_e_respostas["tema"].unique())
+        while True:
+            print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
+            for numero, materia  in enumerate(lista_de_modos):
+                print(f"{numero+1}){materia.title()}")
+            tema_do_jogo=input("      ").upper()
+            if not tema_do_jogo.isnumeric():
+                print('Você não digitou uma opção válida')
+                continue
+            tema_do_jogo_int = int(tema_do_jogo) - 1
+            if (
+                tema_do_jogo_int < 0 or
+                tema_do_jogo >= len(lista_de_modos)
+            ):
+                print('Você não digitou uma opção válida')
+                continue
+            
+            return lista_de_modos[tema_do_jogo_int]
+
+
+    def pergunta_jogo_opcao_mais_simples(self): 
+        lista_de_modos=list(self.tabela_perguntas_e_respostas["tema"].unique())
+        while True:
+            print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
+            for numero, materia  in enumerate(lista_de_modos):
+                print(f"{numero+1}){materia.title()}")
+            tema_do_jogo=input("      ").upper()
+            try:
+                tema_do_jogo_int = abs(int(tema_do_jogo) - 1)
+                return lista_de_modos[tema_do_jogo_int]
+            except:
+                print('Você não digitou uma opção válida')
+
+    def pergunta_jogo_antigo(self):
+        while True:    
+            tema_do_jogo=input("      ").upper()
+            print("Seja bem vindo ao quiz geral! Com qual tema você gostaria de jogar?")
+            print("A)História")
+            print("B)Geografia")
+            print("C)Ciências")
+            print("D)Português")
+            print("E)Pegadinhas")
+            lista_de_alternativas=["A","B","C","D","D","E"]
+            if tema_do_jogo not in lista_de_alternativas:
+                continue
+            match tema_do_jogo:
+                case "A":
+                    return "história"
+                case "B":
+                    return "geografia"
+                case "C":
+                    return "ciências"
+                case "D":
+                    return "português"
+                case "E":
+                    return "pegadinhas"                    
 
     def carrega_perguntas_e_respostas(self, tema):
             
@@ -115,7 +161,7 @@ class QuizGeral():
 
 
     def principal(self):
-        tema=self.pergunta_jogo_com_dicionario()
+        tema=self.pergunta_jogo_opcao_mais_simples()
         self.carrega_perguntas_e_respostas(tema)
         pergunta_sorteada=self.sorteia_pergunta()
 
