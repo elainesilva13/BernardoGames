@@ -91,6 +91,22 @@ class QuizGeral():
             except:
                 print('Você não digitou uma opção válida')
 
+    def pergunta_dificuldade(self):
+        lista_de_dificuldades=list(self.tabela_perguntas_e_respostas["nivel"].unique())
+        while True:
+            print("Agora, diga qual dificuldade você quer:")
+            for numero, dificuldade  in enumerate(lista_de_dificuldades):
+                print(f"{numero+1}){dificuldade.title()}")
+            dificuldade_escolhida=input("      ")
+            try:
+                dificuldade_escolhida=int(lista_de_dificuldades)-1
+                return dificuldade_escolhida
+            except:
+                print("Você digitou uma dificuldade inválida")
+                continue    
+
+
+
     def pergunta_jogo_antigo(self):
         while True:    
             tema_do_jogo=input("      ").upper()
@@ -115,9 +131,10 @@ class QuizGeral():
                 case "E":
                     return "pegadinhas"                    
 
-    def carrega_perguntas_e_respostas(self, tema):
+    def carrega_perguntas_e_respostas(self, tema, dificuldade):
             
         temas=list(self.tabela_perguntas_e_respostas["tema"].unique())
+        # tema_com_dificuldade=temas
         print(temas)
         self.perguntas_e_respostas=self.tabela_perguntas_e_respostas[self.tabela_perguntas_e_respostas["tema"]== tema]
         self.perguntas_e_respostas = self.perguntas_e_respostas.reset_index()
@@ -144,6 +161,7 @@ class QuizGeral():
         # print(f"A){self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]}")
         # print(f"B){self.perguntas_e_respostas['resposta_errada1'].iloc[indice_pergunta]}")
         # print(f"C){self.perguntas_e_respostas['resposta_errada2'].iloc[indice_pergunta]}")
+        self.perguntas_e_respostas.remove(pergunta)
         for i, alternativa in enumerate(lista_de_alternativas):
             print(f"{i+1}){alternativa}")
         resposta_para_teste=int(input("           "))-1
@@ -162,7 +180,8 @@ class QuizGeral():
 
     def principal(self):
         tema=self.pergunta_jogo_opcao_mais_simples()
-        self.carrega_perguntas_e_respostas(tema)
+        dificuldade=self.pergunta_dificuldade
+        self.carrega_perguntas_e_respostas(tema,dificuldade)
         pergunta_sorteada=self.sorteia_pergunta()
 
 
