@@ -16,13 +16,12 @@ warnings.filterwarnings("ignore")
 class QuizGeral():
     def __init__(self):
         self.perguntas_e_respostas:pd.DataFrame
-        self.jogador:str
+        self.jogador:str = ''
         self.pontuacao=0
-        self.placar:pd.DataFrame
         self.tabela_perguntas_e_respostas=pd.read_csv(r"quiz.csv", sep=";")
         self.lista_indices_perguntas=[]
         self.lista_de_alternativas=[]
-        self.resposta_certa=None
+        self.ranking=pd.read_csv(r'ranking.csv', sep=';')
 
     def pergunta_jogo_com_dicionario(self):
         temas = {
@@ -135,10 +134,6 @@ class QuizGeral():
                     return "pegadinhas"                    
 
     def carrega_perguntas_e_respostas(self, tema, dificuldade):
-            
-        temas=list(self.tabela_perguntas_e_respostas["tema"].unique())
-        
-        print(temas)
         self.perguntas_e_respostas=self.tabela_perguntas_e_respostas[self.tabela_perguntas_e_respostas["tema"]== tema]
         self.perguntas_e_respostas = self.perguntas_e_respostas.reset_index()
         print(self.perguntas_e_respostas)
@@ -151,7 +146,7 @@ class QuizGeral():
         indice_pergunta = random.choice(lista_indices)
         print(self.perguntas_e_respostas.iloc[indice_pergunta])
 
-    def sorteia_pergunta(self): #quebrar em 3 funções
+    def sorteia_pergunta_bernardo(self): #quebrar em 3 funções
         indice_pergunta=random.choice(self.lista_indices_perguntas)
         pergunta=(self.perguntas_e_respostas['pergunta'].iloc[indice_pergunta])
         self.resposta_certa=self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]
@@ -164,26 +159,58 @@ class QuizGeral():
         print(pergunta)
         self.lista_indices_perguntas.remove(indice_pergunta)
         return pergunta
+    
+
+    def sorteia_pergunta(self): #quebrar em 3 funções
+        indice_pergunta=random.choice(self.lista_indices_perguntas)
+        self.pergunta_info=dict(self.perguntas_e_respostas.iloc[indice_pergunta])
+        self.lista_indices_perguntas.remove(indice_pergunta)
+
+        print(self.pergunta_info['pergunta'])
+    
+
+    def apresenta_alternativas(self):
+        self.lista_de_alternativas = [
+            self.pergunta_info['resposta_certa'],
+            self.pergunta_info['resposta_errada1'],
+            self.pergunta_info['resposta_errada2']
+        ]
+        
+        random.shuffle(self.lista_de_alternativas)    
+        
        
-    def pergunta_resposta(self,pergunta_escolhida):
+    def pergunta_resposta(self):
         for i, alternativa in enumerate(self.lista_de_alternativas):
             print(f"{i+1}){alternativa}")
-        resposta=int(input("           "))-1
-        self.valida_resposta(resposta)
+        while True:
+            num_alternativa =input("           ")
+            if not num_alternativa.isnumeric() or int(num_alternativa) > len(self.lista_de_alternativas):
+                # A VERIFICAÇÃO DO IF, QUANDO USAMOS "OR", É FEITA NA ORDEM EM QUE ESTÁ, SE UMA CONDIÇÃO FOR VERDADEIRA,
+                # AS DEMAIS NÃO SERÃO VERIFICADAS, VISTO QUE UMA JÁ É SUFICIENTE PARA ENTRAR NO IF
+                print('Você não digitou uma alternativa aceita!')
+                continue
+        
+            self.valida_resposta(int(num_alternativa)-1)
+            return
 
 
     def valida_resposta(self,resposta):
-        if self.lista_de_alternativas[resposta]== self.resposta_certa:
+        if self.lista_de_alternativas[resposta]== self.pergunta_info['resposta_certa']:
             print("Você acertou!")
             self.pontuacao+=1
             print(f"Sua pontuação é:{self.pontuacao}")
             return 
-        print(f"Você errou! A resposta era {self.resposta_certa}")
+        print(f"Você errou! A resposta era {self.pergunta_info['resposta_certa']}")
         self.pontuacao-=1
         print(f"Sua pontuação é:{self.pontuacao}")
      
        
-       
+    def grava_placar(self):
+        self.jogador = input('Qual seu nome?  ')
+        self.ranking.loc[len(self.ranking)] = [self.jogador, self.pontuacao]
+        print(self.ranking)
+        self.ranking.to_csv(r'ranking.csv', sep=';', index=False)
+
 
 
     def principal(self):
@@ -191,10 +218,10 @@ class QuizGeral():
         dificuldade=self.pergunta_dificuldade
         self.carrega_perguntas_e_respostas(tema,dificuldade)
         while len(self.lista_indices_perguntas):
-            pergunta_escolhida=self.sorteia_pergunta()
-            self.pergunta_resposta(pergunta_escolhida)
-        
-
+            self.sorteia_pergunta()
+            self.apresenta_alternativas()
+            self.pergunta_resposta()
+        self.grava_placar()
 
 iniciador=QuizGeral()
 comecar=iniciador.principal() 
