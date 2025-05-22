@@ -17,9 +17,12 @@ class QuizGeral():
     def __init__(self):
         self.perguntas_e_respostas:pd.DataFrame
         self.jogador:str
-        self.pontuacao:int
+        self.pontuacao=0
         self.placar:pd.DataFrame
         self.tabela_perguntas_e_respostas=pd.read_csv(r"quiz.csv", sep=";")
+        self.lista_indices_perguntas=[]
+        self.lista_de_alternativas=[]
+        self.resposta_certa=None
 
     def pergunta_jogo_com_dicionario(self):
         temas = {
@@ -134,11 +137,14 @@ class QuizGeral():
     def carrega_perguntas_e_respostas(self, tema, dificuldade):
             
         temas=list(self.tabela_perguntas_e_respostas["tema"].unique())
-        # tema_com_dificuldade=temas
+        
         print(temas)
         self.perguntas_e_respostas=self.tabela_perguntas_e_respostas[self.tabela_perguntas_e_respostas["tema"]== tema]
         self.perguntas_e_respostas = self.perguntas_e_respostas.reset_index()
         print(self.perguntas_e_respostas)
+        self.lista_indices_perguntas=list(self.perguntas_e_respostas.index)
+        print(self.lista_indices_perguntas)
+        
 
     def sorteia_pergunta_outra_forma(self):
         lista_indices = list(self.perguntas_e_respostas.index)
@@ -146,33 +152,35 @@ class QuizGeral():
         print(self.perguntas_e_respostas.iloc[indice_pergunta])
 
     def sorteia_pergunta(self): #quebrar em 3 funções
-        qtd=len(self.perguntas_e_respostas)    
-        indice_pergunta = random.randint(0, qtd) #randint = sorteia número inteiro
+        indice_pergunta=random.choice(self.lista_indices_perguntas)
         pergunta=(self.perguntas_e_respostas['pergunta'].iloc[indice_pergunta])
-        resposta_certa=self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]
-        lista_de_alternativas=[
-            resposta_certa,
+        self.resposta_certa=self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]
+        self.lista_de_alternativas=[
+            self.resposta_certa,
             self.perguntas_e_respostas['resposta_errada1'].iloc[indice_pergunta],
             self.perguntas_e_respostas['resposta_errada2'].iloc[indice_pergunta]]
 
-        random.shuffle(lista_de_alternativas)    
-
+        random.shuffle(self.lista_de_alternativas)    
         print(pergunta)
-        # print(f"A){self.perguntas_e_respostas['resposta_certa'].iloc[indice_pergunta]}")
-        # print(f"B){self.perguntas_e_respostas['resposta_errada1'].iloc[indice_pergunta]}")
-        # print(f"C){self.perguntas_e_respostas['resposta_errada2'].iloc[indice_pergunta]}")
-        self.perguntas_e_respostas.remove(pergunta)
-        for i, alternativa in enumerate(lista_de_alternativas):
+        self.lista_indices_perguntas.remove(indice_pergunta)
+        return pergunta
+       
+    def pergunta_resposta(self,pergunta_escolhida):
+        for i, alternativa in enumerate(self.lista_de_alternativas):
             print(f"{i+1}){alternativa}")
-        resposta_para_teste=int(input("           "))-1
-        if lista_de_alternativas[resposta_para_teste]== resposta_certa:
+        resposta=int(input("           "))-1
+        self.valida_resposta(resposta)
+
+
+    def valida_resposta(self,resposta):
+        if self.lista_de_alternativas[resposta]== self.resposta_certa:
             print("Você acertou!")
             self.pontuacao+=1
-            print(self.pontuacao)
+            print(f"Sua pontuação é:{self.pontuacao}")
             return 
-        print(f"Você errou! A resposta era {resposta_certa}")
+        print(f"Você errou! A resposta era {self.resposta_certa}")
         self.pontuacao-=1
-        
+        print(f"Sua pontuação é:{self.pontuacao}")
      
        
        
@@ -182,8 +190,14 @@ class QuizGeral():
         tema=self.pergunta_jogo_opcao_mais_simples()
         dificuldade=self.pergunta_dificuldade
         self.carrega_perguntas_e_respostas(tema,dificuldade)
-        pergunta_sorteada=self.sorteia_pergunta()
+        while len(self.lista_indices_perguntas):
+            pergunta_escolhida=self.sorteia_pergunta()
+            self.pergunta_resposta(pergunta_escolhida)
+        
 
 
 iniciador=QuizGeral()
 comecar=iniciador.principal() 
+#         print(self.lista_indices_perguntas)
+#        
+#        
