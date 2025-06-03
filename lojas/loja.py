@@ -16,7 +16,7 @@ class Loja():
         self.dinheiro=8000
         self.produtos_e_precos={"celular":980, "computador":1450, "ps5":3800, "caixa de som":170, "controle de tv universal":135, "controle de ps5": 370, "televisão":2400, "impressora":1900, "balinha": 3}
         self.produtos_e_quantidades={"celular":4, "computador":3, "ps5":2, "caixa de som":8, "controle de tv universal": 23, "controle de ps5": 6, "televisão":4, "impressora": 7, "balinha": 117}
-        self.tabela_produtos=pd.read_csv(r"estoque originaly.csv", sep=";")
+        self.tabela_produtos=pd.read_csv(r"lojas\estoque originaly.csv", sep=";")
     
     # def bem_vindo(self): #remover redundâncias
     #     print("\nBem vindo a nossa loja! O que você gostaria de fazer?\n")
@@ -195,6 +195,7 @@ class Loja():
                 self.comprar_um_produto()    
                 time.sleep(2)
             if decisao== "sair":
+                self.tabela_produtos.to_csv(r"lojas\estoque originaly.csv", sep=";", index=False)
                 print(f"Obrigado por comprar na nossa loja! ")
                 break
 

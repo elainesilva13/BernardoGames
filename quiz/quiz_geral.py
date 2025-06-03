@@ -208,6 +208,7 @@ class QuizGeral():
     def grava_placar(self):
         self.jogador = input('Qual seu nome?  ')
         self.ranking.loc[len(self.ranking)] = [self.jogador, self.pontuacao]
+        self.ranking=self.ranking.sort_values(by="pontuacao", ascending=False)
         print(self.ranking)
         self.ranking.to_csv(r'ranking.csv', sep=';', index=False)
 
