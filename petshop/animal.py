@@ -69,4 +69,4 @@ class Animal():
         print(tabela_de_informacoes)
 
 iniciador=Animal()
-iniciador.cadastrar_novo_atualizado()        
+iniciador.cadastrar_novo_validando_colunas_e_atributos()        
