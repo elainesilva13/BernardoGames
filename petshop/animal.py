@@ -34,7 +34,7 @@ class Animal():
 
     def cadastrar_novo_atualizado(self):
             print(self.__dict__)
-            tabela_de_informacoes=pd.read_csv(r"petshop\fichas\animal.csv", sep=";")
+            tabela_de_informacoes=pd.read_csv(r"petshop/fichas/animal.csv", sep=";")
             print(tabela_de_informacoes)
             lista_dados=[]
             dados=tabela_de_informacoes.columns
@@ -53,6 +53,20 @@ class Animal():
             print(self.__dict__.get("comprimento", "nao tem comprimento"))
             # print(self.__dict__["morango"])
             print(tabela_de_informacoes.columns)
+
+    def cadastrar_novo_validando_colunas_e_atributos(self):
+        tabela_de_informacoes=pd.read_csv(r"petshop\fichas\animal.csv", sep=";")
+        lista_dados = []
+        for pergunta in tabela_de_informacoes.columns:
+            resposta = input(f'Qual o {pergunta} do pet?    ') 
+            if pergunta in self.__dict__.keys():
+                self.__dict__[pergunta]=resposta             
+            lista_dados.append(resposta)
+
+        tabela_de_informacoes.loc[len(tabela_de_informacoes)]=lista_dados
+        tabela_de_informacoes.to_csv(r"petshop\fichas\animal.csv", sep=";", index=False)
+        print(self.__dict__)
+        print(tabela_de_informacoes)
 
 iniciador=Animal()
 iniciador.cadastrar_novo_atualizado()        
