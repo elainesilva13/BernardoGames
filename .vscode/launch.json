@@ -22,7 +22,17 @@
 
             "console": "integratedTerminal"
 
+        },
+        {
+
+            "name": "PetShop",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "petshop.petshop",
+            "console": "integratedTerminal"
+
         }
+
 
     ]
 

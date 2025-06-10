@@ -1,8 +1,8 @@
 import pandas as pd
 import warnings
-from produtos import Produtos
-from funcionario import Funcionario
-from animal import Animal
+from petshop.produtos import Produtos
+from petshop.funcionario import Funcionario
+from petshop.animal import Animal
 warnings.filterwarnings("ignore")
 
 

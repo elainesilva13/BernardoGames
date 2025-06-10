@@ -8,7 +8,7 @@ class Produtos():
         self.estoque=""
 
     def adiciona_produto(self):    
-        tabela_de_produtos=pd.read_csv(r"petshop\fichas\produtos.csv", sep=";")
+        tabela_de_produtos=pd.read_csv("petshop/fichas/produtos.csv", sep=";")
         lista_dados=[]
         for chave, valor in self.__dict__.items():
             print(chave)
