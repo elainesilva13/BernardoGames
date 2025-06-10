@@ -1,5 +1,7 @@
 import pandas as pd
+
 class Funcionario():
+    
     def __init__(self):
         self.nome=""
         self.idade=""
