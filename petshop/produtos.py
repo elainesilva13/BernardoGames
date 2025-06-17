@@ -1,7 +1,7 @@
 import pandas as pd
 from petshop.modelo import ModeloPetShop
 
-class Produtos():
+class Produtos(ModeloPetShop):
     
     def __init__(self):
         super().__init__()
