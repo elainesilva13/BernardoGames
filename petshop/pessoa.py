@@ -1,7 +1,7 @@
 import pandas as pd
 from abc import ABC, abstractmethod
 
-class Pessoa():
+class Pessoa(ABC): # ABC indica que é uma classe abstrata, ou seja, uma classe modelo para outras
     def __init__(self):
         self.idade=""
         self.genero=""
