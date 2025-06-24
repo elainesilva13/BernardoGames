@@ -6,10 +6,7 @@ class Funcionario(ModeloPetShop):
     
     def __init__(self):
         super().__init__()
-        self.idade=""
-        self.genero=""
         self.salario=""
-        self.cidade_de_residencia=""
 
     # def cadastro(self):
     #     tabela_de_informacoes=pd.read_csv(r"petshop\fichas\funcionario.csv", sep=";")

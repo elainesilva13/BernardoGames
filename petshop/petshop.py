@@ -47,9 +47,11 @@ class PetShop():
                 case "A":
                     return objeto_a_ser_manipulado.cadastrar()
                 case "B":
-                    return objeto_a_ser_manipulado.modificar()
+                    modifcar_linha_inteira=self.especifica_tamanho_da_acao()
+                    return objeto_a_ser_manipulado.modificar(modifcar_linha_inteira)
                 case "C":
-                    return objeto_a_ser_manipulado.eliminar()
+                    modifcar_linha_inteira=self.especifica_tamanho_da_acao()
+                    return objeto_a_ser_manipulado.eliminar(modifcar_linha_inteira)
                 case "D":
                     return objeto_a_ser_manipulado.mostrar()
                 case "Z":
@@ -71,7 +73,26 @@ class PetShop():
     #     animal.cadastrar()
 
     # def modifica_produto():
-    #     pass
+    #     pass  
+
+
+    def especifica_tamanho_da_acao(self):
+        while True:    
+            print("Voce quer modificar uma linha inteira ou uma informação especifica?")
+            print("A)Linha inteira")
+            print("B)Informação especifica")
+            resposta=input("     ").upper()
+            match resposta:
+                case "A":
+                    return False
+                case "B":
+                    return True
+                case _:
+                    print("A opção digitada não é valida. Tente de novo")
+                    continue
+
+
+
 
     def principal(self):
         while True:
