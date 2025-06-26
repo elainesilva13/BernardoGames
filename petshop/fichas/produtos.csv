@@ -1,5 +1,4 @@
 nome do produto;preço do produto;estoque
-racao;40;15
-racao de gato;50;100
-objeto modificado;50;10
-objeto novo;34;90
+racao de gato;50.0;27
+teste;15.0;10.0
+objeto novo;34.0;90.0

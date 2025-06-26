@@ -22,6 +22,12 @@ class ModeloPetShop():
         indice_int=self.pega_indice()
         tabela=self.retorna_dataframe()
         lista_dados=[]
+        if modifcar_linha_inteira== False:
+            localizacao=self.pega_localizacao_especifica()
+            informacao_a_adicionar=input("     ")
+            tabela[localizacao[1]].iloc[localizacao[0]]=informacao_a_adicionar
+            self.salva_atualizacoes(tabela)
+            return
         for chave, valor in self.__dict__.items():
             print(chave)
             informacao_a_adicionar=input("     ")
@@ -36,37 +42,32 @@ class ModeloPetShop():
         print(tabela)
         
 
-    def eliminar(self, modifcar_linha_inteira):
+    def eliminar(self):
         tabela=self.retorna_dataframe()
-        if modifcar_linha_inteira== False:
-            indices_especificos=self.pega_indices_especificos()
-            tabela=tabela.drop(tabela[indices_especificos[0]].iloc[indices_especificos[1]])
-            self.salva_atualizacoes(tabela)
-            return
         indice=self.pega_indice()
         tabela=tabela.drop(indice)
         self.salva_atualizacoes(tabela)
 
 
 
-    def pega_indices_especificos(self):
+    def pega_localizacao_especifica(self):
         lista_indices=[]
         tabela=self.retorna_dataframe()
         while True:
             print(tabela)
-            print("Diga o indice que você quer acessar?")
+            print("Diga o indice que você quer acessar\n")
             indice=input("     ")
             if not indice.isnumeric() or int(indice) not in tabela.index:
-                print("Esse indice não é valido. Tente novamente")
+                print("Esse indice não é valido. Tente novamente\n")
                 continue
             lista_indices.append(int(indice))
             break
         while True:
             print(tabela)
-            print("E agora, qual a coluna?")
+            print("E agora, qual a coluna?\n")
             coluna=input("    ").lower()
             if not coluna in tabela.columns:
-                print("A coluna digitada não existe. Tente de novo")
+                print("A coluna digitada não existe. Tente de novo\n")
                 continue
             lista_indices.append(coluna)
 
@@ -77,10 +78,10 @@ class ModeloPetShop():
         tabela=self.retorna_dataframe()
         while True:
             print(tabela)
-            print("Diga o indice que você quer acessar?")
+            print("Diga o indice que você quer acessar\n")
             indice=input("     ")
             if not indice.isnumeric() or int(indice) not in tabela.index:
-                print("Esse indice não é valido. Tente novamente")
+                print("Esse indice não é valido. Tente novamente\n")
                 continue
             return int(indice)
 
@@ -97,3 +98,16 @@ class ModeloPetShop():
         nome_do_arquivo=self.pega_nome_planilha_csv()
         tabela.to_csv(nome_do_arquivo, sep=";", index=False)
 
+    def modificar_da_prof(self):
+        indice_int=self.pega_indice()
+        tabela=self.retorna_dataframe()
+        lista_dados=[]
+        for chave in tabela.columns:
+            print(chave)
+            informacao_a_adicionar=input(f"{tabela[chave].iloc[indice_int]}. Digite o novo dado ou pressione 'enter':     \n")
+            lista_dados.append(informacao_a_adicionar if informacao_a_adicionar.strip() != '' else tabela[chave].iloc[indice_int])
+        tabela.iloc [indice_int]=lista_dados
+        self.salva_atualizacoes(tabela)
+ 
+
+#  tabela[localizacao[1]].iloc[localizacao[0]]=informacao_a_adiciona
